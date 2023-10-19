@@ -3,8 +3,19 @@
 namespace HardG\BuddyPress120URLPolyfills;
 
 class Loader {
-	public function __construct() {
-		add_action( 'bp_include', array( $this, 'load' ) );
+	private function __construct() {}
+
+	public static function init() {
+		static $instance = null;
+
+		if ( null === $instance ) {
+			$instance = new static();
+			$instance->setup();
+		}
+	}
+
+	private function setup() {
+		add_action( 'bp_include', [ $this, 'load' ] );
 	}
 
 	public function load() {
