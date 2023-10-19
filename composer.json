@@ -9,5 +9,10 @@
             "email": "boonebgorges@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+		"autoload": {
+			"psr-4": {
+				"HardG\\BuddyPress120UrlPolyfills\\": "src/"
+			}
+		}
 }
