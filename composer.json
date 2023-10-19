@@ -2,7 +2,7 @@
     "name": "hard-g/buddypress-12.0-url-polyfills",
     "description": "Polyfills for URL-related functions introduced in BuddyPress 12.0.",
     "type": "library",
-    "license": "GPLv3",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Boone B Gorges",
