@@ -87,7 +87,14 @@ if ( ! function_exists( 'bp_get_group_manage_url' ) ) :
  * @return string The URL of the manage screen for the group.
  */
 function bp_get_group_manage_url( $group = 0, $path_chunks = array() ) {
-	$full_path_chunks = array_merge( array( 'admin' ), $path_chunks );
+	$full_path_chunks = array(
+		'single_item_action' => 'admin',
+	);
+
+	if ( ! empty( $path_chunks['single_item_action_variables'] ) ) {
+		$full_path_chunks['single_item_action_variables'] = $path_chunks['single_item_action_variables'];
+	}
+
 	return bp_get_group_url( $group, $full_path_chunks );
 }
 endif;
@@ -100,24 +107,30 @@ if ( ! function_exists( 'bp_groups_get_path_chunks' ) ) :
  * trusts the values passed to it.
  *
  * @param array $chunks Array of URL path chunks.
+ * @param string $context The context of the URL. Optional. Default: 'read'.
  * @return array Array of path chunks in the format expected by bp_members_get_user_url().
  */
-function bp_groups_get_path_chunks( $chunks ) {
+function bp_groups_get_path_chunks( $chunks = array(), $context = 'read' ) {
 	$path_chunks = array();
 
-	$single_item_action = array_shift( $chunks );
-	if ( $single_item_action ) {
-		$path_chunks['single_item_action'] = $single_item_action;
-	}
+	if ( 'manage' === $context ) {
+		$path_chunks['single_item_action']           = 'admin';
+		$path_chunks['single_item_action_variables'] = $chunks;
+	} else {
+		$single_item_action = array_shift( $chunks );
+		if ( $single_item_action ) {
+			$path_chunks['single_item_action'] = $single_item_action;
+		}
 
-	// If action variables were added as an array, reset chunks to it.
-	if ( isset( $chunks[0] ) && is_array( $chunks[0] ) ) {
-		$chunks = reset( $chunks );
-	}
+		// If action variables were added as an array, reset chunks to it.
+		if ( isset( $chunks[0] ) && is_array( $chunks[0] ) ) {
+			$chunks = reset( $chunks );
+		}
 
-	if ( $chunks ) {
-		foreach ( $chunks as $chunk ) {
-			$path_chunks['single_item_action_variables'][] = $chunk;
+		if ( $chunks ) {
+			foreach ( $chunks as $chunk ) {
+				$path_chunks['single_item_action_variables'][] = $chunk;
+			}
 		}
 	}
 
