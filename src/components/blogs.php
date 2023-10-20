@@ -4,6 +4,10 @@
  * BuddyPress 12.0 URL polyfills - Blogs component.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! function_exists( 'bp_blogs_directory_url' ) ) :
 /**
  * Output Blogs directory's URL.
