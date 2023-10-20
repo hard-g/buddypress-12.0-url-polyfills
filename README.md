@@ -1,10 +1,10 @@
 # BuddyPress 12.0 URL Polyfills
 
-In version 12.0, BuddyPress underwent a rewrite that changed the way that URLs are built and routed. Previously, URLs were built using a combination of WordPress page routing (the "bp_pages" system for top-level components), PHP constants, and hardcoded strings. After version 12.0, all URLs run through WP's rewrite API.
+In version 12.0, BuddyPress changed the way that its URLs are built and routed. Previously, URLs were built using a combination of WordPress page routing (the "bp_pages" system for top-level components), PHP constants, and hardcoded strings. After version 12.0, all URLs run through WP's rewrite API.
 
-To accomodate this breaking change, new functions were introduced in BP 12.0 to build URLs. For example, where previously you might have used `bp_get_group_permalink( $group_id )`, you now use `bp_get_group_url( $group_id )`.
+To accommodate this breaking change, new functions were introduced in BP 12.0 to build URLs. For example, where previously you might have used `bp_get_group_permalink( $group_id )`, you now use `bp_get_group_url( $group_id )`.
 
-This polyfill library allows developers to build BuddyPress plugins that are compatible with both the new and old URL systems. Developers should write code that uses the new URL functions, such as `bp_get_group_url()`. Then, if the plugin is loaded on a site running a version of BuddyPress prior to 12.0, this library will provide the necessary polyfills so that your plugin runs as expected. Similarly, developers updating their existing BuddyPress plugins for BP 12.0 compatibility can update their code to use the new URL functions exclusively, and then use this library to provide backwards compatibility for older versions of BuddyPress.
+The BuddyPress 12.0 URL Polyfills library allows developers to build BuddyPress plugins that are compatible with both the new and old URL systems. Developers should write code that uses the new URL functions, such as `bp_get_group_url()`. Then, if the plugin is loaded on a site running a version of BuddyPress prior to 12.0, this library will provide the necessary polyfills so that your plugin runs as expected. Similarly, developers updating their existing BuddyPress plugins for BP 12.0 compatibility can update their code to use the new URL functions exclusively, and then use this library to provide backwards compatibility for older versions of BuddyPress.
 
 ## Installation
 
