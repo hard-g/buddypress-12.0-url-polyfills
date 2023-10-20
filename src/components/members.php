@@ -47,12 +47,23 @@ if ( ! function_exists( 'bp_loggedin_user_url' ) ) :
 /**
  * Gets the URL of the logged-in user.
  *
- * @param int   $user_id     The user ID.
  * @param array $path_chunks Optional array of path chunks. See bp_members_get_user_url().
  * @return string The URL of the logged-in user.
  */
 function bp_loggedin_user_url( $path_chunks = array() ) {
 	return bp_members_get_user_url( bp_loggedin_user_id(), $path_chunks );
+}
+endif;
+
+if ( ! function_exists( 'bp_displayed_user_url' ) ) :
+/**
+ * Gets the URL of the displayed user.
+ *
+ * @param array $path_chunks Optional array of path chunks. See bp_members_get_user_url().
+ * @return string The URL of the logged-in user.
+ */
+function bp_displayed_user_url( $path_chunks = array() ) {
+	return bp_members_get_user_url( bp_displayed_user_id(), $path_chunks );
 }
 endif;
 
