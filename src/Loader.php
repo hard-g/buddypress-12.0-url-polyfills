@@ -23,10 +23,15 @@ class Loader {
 			return;
 		}
 
-		$active_components = bp_core_get_active_components();
+		require_once __DIR__ . '/components/activity.php';
+		require_once __DIR__ . '/components/members.php';
 
-		foreach ( $active_components as $component ) {
-			require_once __DIR__ . "/components/{$component}.php";
+		if ( bp_is_active( 'groups' ) ) {
+			require_once __DIR__ . '/components/groups.php';
+		}
+
+		if ( bp_is_active( 'blogs' ) ) {
+			require_once __DIR__ . '/components/blogs.php';
 		}
 	}
 }
