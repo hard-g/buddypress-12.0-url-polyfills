@@ -19,8 +19,14 @@ class Loader {
 	}
 
 	public function load() {
-		if ( version_compare( bp_get_version(), '12.0', '<' ) ) {
-			require_once __DIR__ . '/functions.php';
+		if ( ! version_compare( bp_get_version(), '12.0', '<' ) ) {
+			return;
+		}
+
+		$active_components = bp_core_get_active_components();
+
+		foreach ( $active_components as $component ) {
+			require_once __DIR__ . "/components/{$component}.php";
 		}
 	}
 }
