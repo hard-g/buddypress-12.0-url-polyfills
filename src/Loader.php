@@ -24,6 +24,7 @@ class Loader {
 		}
 
 		require_once __DIR__ . '/components/activity.php';
+		require_once __DIR__ . '/components/core.php';
 		require_once __DIR__ . '/components/members.php';
 
 		if ( bp_is_active( 'groups' ) ) {
