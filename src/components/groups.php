@@ -61,15 +61,13 @@ if ( ! function_exists( 'bp_group_manage_url' ) ) :
 /**
  * Outputs the requested group's manage URL.
  *
- * @param int|BP_Groups_Group $group       The group ID or the group object.
- * @param array               $path_chunks {
- *     An array of path chunks to append to the URL. Optional.
- *
- *     @type array $single_item_action_variables An array of additional URL chunks.
- * }
+ * @param int|BP_Groups_Group $group  The group ID or the group object.
+ * @param array               $chunks A list of default BP Slugs to append.
  * @return void
  */
-function bp_group_manage_url( $group = 0, $path_chunks = array() ) {
+function bp_group_manage_url( $group = 0, $chunks = array() ) {
+	$path_chunks = bp_groups_get_path_chunks( $chunks, 'manage' );
+
 	echo esc_url( bp_get_group_manage_url( $group, $path_chunks ) );
 }
 endif;
@@ -114,8 +112,12 @@ function bp_groups_get_path_chunks( $chunks = array(), $context = 'read' ) {
 	$path_chunks = array();
 
 	if ( 'manage' === $context ) {
-		$path_chunks['single_item_action']           = 'admin';
 		$path_chunks['single_item_action_variables'] = $chunks;
+
+	} elseif ( 'create' === $context && $chunks ) {
+		$path_chunks['create_single_item_variables'] = array( 'step' );
+		$path_chunks['create_single_item_variables'] = array_merge( $path_chunks['create_single_item_variables'], $chunks );
+
 	} else {
 		$single_item_action = array_shift( $chunks );
 		if ( $single_item_action ) {
@@ -170,6 +172,10 @@ function bp_get_groups_directory_url( $path_chunks = array() ) {
 
 	if ( ! empty( $path_chunks['create_single_item'] ) ) {
 		$directory_url = trailingslashit( $directory_url . 'create' );
+
+		if ( ! empty( $path_chunks['create_single_item_variables'] ) && is_array( $path_chunks['create_single_item_variables'] ) ) {
+			$directory_url .= join( '/', $path_chunks['create_single_item_variables'] ) . '/';
+		}
 	}
 
 	return $directory_url;
@@ -184,14 +190,12 @@ if ( ! function_exists( 'bp_groups_get_create_url' ) ) :
  * @return string The group create URL.
  */
 function bp_groups_get_create_url( $action_variables = array() ) {
-	$path_chunks = array();
+	$path_chunks = array(
+		'create_single_item' => 1,
+	);
 
 	if ( is_array( $action_variables ) && $action_variables ) {
-		$path_chunks = bp_groups_get_path_chunks( $action_variables, 'create' );
-	} else {
-		$path_chunks = array(
-			'create_single_item' => 1,
-		);
+		$path_chunks = array_merge( $path_chunks, bp_groups_get_path_chunks( $action_variables, 'create' ) );
 	}
 
 	return bp_get_groups_directory_url( $path_chunks );

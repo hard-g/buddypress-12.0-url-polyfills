@@ -8,6 +8,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! function_exists( 'bp_members_get_user_slug' ) ) {
+	/**
+	 * Get a member's slug.
+	 *
+	 * @param integer $user_id The User ID.
+	 * @return string The member slug.
+	 */
+	function bp_members_get_user_slug( $user_id = 0 ) {
+		return bp_core_get_username( $user_id );
+	}
+}
+
 if ( ! function_exists( 'bp_members_get_user_url' ) ) :
 /**
  * Gets the URL of a user.
